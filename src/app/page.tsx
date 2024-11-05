@@ -2,6 +2,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 
 export default function Home() {
+  
   fetch('https://goweather.herokuapp.com/weather/') // TODO: this needs updated, a variable at the end, for whatever city is entered to search
   .then(response => {
     return response.json();  

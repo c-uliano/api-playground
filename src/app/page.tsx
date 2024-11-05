@@ -2,6 +2,17 @@ import Image from "next/image";
 import styles from "./page.module.css";
 
 export default function Home() {
+  fetch('https://goweather.herokuapp.com/weather/') // TODO: this needs updated, a variable at the end, for whatever city is entered to search
+  .then(response => {
+    return response.json();  
+  })
+  .then(data => {
+    console.log(data);  
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
@@ -9,7 +20,11 @@ export default function Home() {
         <h2>Test 1</h2>
         <p>A very basic weather api. Search a city to see the weather and forecast</p>
         <p>Repo can be found <a href="https://github.com/robertoduessmann/weather-api" target="_blank">here</a></p>
+
       </main>
+
+
+
       <footer className={styles.footer}>
         <a
           href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"

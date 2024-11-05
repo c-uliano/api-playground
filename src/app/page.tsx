@@ -1,14 +1,19 @@
+'use client'
 import Image from "next/image";
 import styles from "./page.module.css";
+import React, { useState } from "react";
 
 export default function Home() {
+  const [city, setCity] = useState([]);
   
-  fetch('https://goweather.herokuapp.com/weather/') // TODO: this needs updated, a variable at the end, for whatever city is entered to search
+  // TODO this should probably be in a useEffect, it kept running in the console non-stop
+  fetch('https://goweather.herokuapp.com/weather/cleveland') // TODO: this needs updated, a variable at the end, for whatever city is entered to search
   .then(response => {
     return response.json();  
   })
   .then(data => {
     console.log(data);  
+    setCity(data);
   })
   .catch(error => {
     console.error('Error:', error);
@@ -21,7 +26,6 @@ export default function Home() {
         <h2>Test 1</h2>
         <p>A very basic weather api. Search a city to see the weather and forecast</p>
         <p>Repo can be found <a href="https://github.com/robertoduessmann/weather-api" target="_blank">here</a></p>
-
       </main>
 
 

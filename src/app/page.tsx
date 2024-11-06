@@ -1,6 +1,6 @@
 'use client'
 import Image from "next/image";
-import styles from "./page.module.css";
+import styles from "./page.module.scss";
 import React, { useState } from "react";
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
     setCity(data);
   })
   .catch(error => {
-    console.error('Error:', error);
+    console.log('Error:', error);
   });
 
   return (

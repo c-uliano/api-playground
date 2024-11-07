@@ -1,11 +1,11 @@
 "use client";
-import Image from "next/image";
 import styles from "./page.module.scss";
 import React, { useState, useEffect } from "react";
 
 // * had to do this, defining the types of each property, because typescript throws an error: Property 'title' does not exist on type 'never'
 type ItemType = {
     title: string;
+    id: number;
     // other properties
 };
 
@@ -34,11 +34,15 @@ export default function Home() {
                 <h1>API Playground</h1>
                 <h2>Test 1</h2>
                 <p>A very basic api. Search an author or title to find book info</p>
+                <h4>Phase One</h4>
+                <p>This list is showing the results of a search for "Alice In Wonderland"</p>
                 <ul>
                     {searchResult.map((item) => (
-                        <li>{item.title}</li>
+                        <li key={item.id}>{item.title}</li>
                     ))}
                 </ul>
+                <h4>Phase Two</h4>
+                <p><code>input</code> to capture a search term</p>
             </main>
         </div>
     );

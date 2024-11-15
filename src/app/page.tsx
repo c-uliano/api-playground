@@ -1,6 +1,7 @@
 "use client";
 import styles from "./page.module.scss";
 import React, { useState, useEffect } from "react";
+import { SearchBar } from "@/components/SearchBar/SearchBar";
 
 // * had to do this, defining the types of each property, because typescript throws an error: Property 'title' does not exist on type 'never'
 type ItemType = {
@@ -43,6 +44,7 @@ export default function Home() {
                 </ul>
                 <h4>Phase Two</h4>
                 <p><code>input</code> to capture a search term</p>
+                <SearchBar />
             </main>
         </div>
     );

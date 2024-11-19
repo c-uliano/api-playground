@@ -9,14 +9,17 @@ type ItemType = {
     id: number;
     // other properties
 };
-
+// ! I don't understand how this is working, had help from chatgpt
 export default function Home() {
     const [searchResult, setSearchResult] = useState<ItemType[]>([]);
+    const [value, setValue] = useState('');
+    const [query, setQuery] = useState('');
 
     //// this should probably be in a useEffect, it kept running in the console non-stop
     // * https://gutendex.com/ for documentation
     useEffect(() => {
-        fetch("https://gutendex.com/books?search=alice%20in%20wonderland") // TODO: this needs updated, a variable at the end, for whatever is typed in searchbar
+        if (query) {
+            fetch(`https://gutendex.com/books?search=${query}`) // TODO: this needs updated, a variable at the end, for whatever is typed in searchbar
             .then((response) => {
                 return response.json();
             })
@@ -27,7 +30,12 @@ export default function Home() {
             .catch((error) => {
                 console.log("Error:", error);
             });
-    }, []);
+        }      
+    }, [query]);
+
+    const handleSearchClick = () => {
+        setQuery(value);
+    }
 
     return (
         <div className={styles.page}>
@@ -35,16 +43,17 @@ export default function Home() {
                 <h1>API Playground</h1>
                 <h2>Test 1</h2>
                 <p>A very basic api. Search an author or title to find book info</p>
-                <h4>Phase One</h4>
-                <p>This list is showing the results of a search for "Alice In Wonderland"</p>
-                <ul>
-                    {searchResult.map((item) => (
-                        <li key={item.id}>{item.title}</li>
-                    ))}
-                </ul>
+
                 <h4>Phase Two</h4>
                 <p><code>input</code> to capture a search term</p>
-                <SearchBar />
+                <SearchBar value={value} setValue={setValue} onSearchClick={handleSearchClick} />
+
+                {/* Display the search results */}
+                <ul>
+                    {searchResult.map((book) => (
+                        <li key={book.id}>{book.title}</li>
+                    ))}
+                </ul>
             </main>
         </div>
     );

@@ -9,7 +9,6 @@ type ItemType = {
     id: number;
     // other properties
 };
-// ! I don't understand how this is working, had help from chatgpt
 export default function Home() {
     const [searchResult, setSearchResult] = useState<ItemType[]>([]);
     const [value, setValue] = useState('');
@@ -17,23 +16,32 @@ export default function Home() {
 
     //// this should probably be in a useEffect, it kept running in the console non-stop
     // * https://gutendex.com/ for documentation
-    useEffect(() => {
-        if (query) {
-            fetch(`https://gutendex.com/books?search=${query}`) // TODO: this needs updated, a variable at the end, for whatever is typed in searchbar
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                setSearchResult(data.results);
-                console.log(data.results);
-            })
-            .catch((error) => {
-                console.log("Error:", error);
-            });
-        }      
-    }, [query]);
 
-    const handleSearchClick = () => {
+    useEffect(() => {
+        // if there's nothing saved in value, don't fetch. This stopped the random data that would be pulled and displayed
+        if (query) {
+            fetch(`https://gutendex.com/books?search=${query}`)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    setSearchResult(data.results);
+                    console.log(data.results);
+                })
+                .catch((error) => {
+                    console.log("Error:", error);
+                });
+        }
+    }, [query]); // this needs to run every time the search value changes
+
+    const onSearch = () => {
+        // when the button is clicked the searched term needs to be updated in the api query
+        // on click, update value with new value
+        // const newValue = value;
+        // setValue(newValue); // this doesn't work, I'm getting some weirdness, probably because setValue is being used in the SearchBar input's onChange as well?
+
+        // okay, so the search term and the search query should be 2 different pieces.
+        // take the search value and update the query value
         setQuery(value);
     }
 
@@ -46,7 +54,7 @@ export default function Home() {
 
                 <h4>Phase Two</h4>
                 <p><code>input</code> to capture a search term</p>
-                <SearchBar value={value} setValue={setValue} onSearchClick={handleSearchClick} />
+                <SearchBar value={value} setValue={setValue} onSearchHandler={onSearch} />
 
                 {/* Display the search results */}
                 <ul>

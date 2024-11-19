@@ -1,21 +1,21 @@
 import React, {useState} from 'react';
 
 export const SearchBar = (props: any) => {
-    const {value, setValue, onSearchClick} = props;
+    const {value, setValue, onSearchHandler} = props;
 
     const onChangeHandler = (e: any) => {
         setValue(e.target.value);
     }
 
-    const onSubmit = (e: any) => {
+    const onSubmitHandler = (e: any) => {
         e.preventDefault();
     }
 
     return (
         <>
-            <form action="" onSubmit={onSubmit}>
+            <form action="" onSubmit={onSubmitHandler}>
                 <input onChange={onChangeHandler} type="text" value={value} />
-                <button type='button' onClick={onSearchClick}>Search</button>
+                <button onClick={onSearchHandler}>Search</button>
             </form>
             <p>{value}</p>
         </>

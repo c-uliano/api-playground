@@ -9,33 +9,25 @@ type ItemType = {
     id: number;
     // other properties
 };
-// ! I don't understand how this is working, had help from chatgpt
 export default function Home() {
     const [searchResult, setSearchResult] = useState<ItemType[]>([]);
     const [value, setValue] = useState('');
-    const [query, setQuery] = useState('');
 
     //// this should probably be in a useEffect, it kept running in the console non-stop
     // * https://gutendex.com/ for documentation
     useEffect(() => {
-        if (query) {
-            fetch(`https://gutendex.com/books?search=${query}`) // TODO: this needs updated, a variable at the end, for whatever is typed in searchbar
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                setSearchResult(data.results);
-                console.log(data.results);
-            })
-            .catch((error) => {
-                console.log("Error:", error);
-            });
-        }      
-    }, [query]);
-
-    const handleSearchClick = () => {
-        setQuery(value);
-    }
+        fetch(`https://gutendex.com/books?search=${value}`)
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            setSearchResult(data.results);
+            console.log(data.results);
+        })
+        .catch((error) => {
+            console.log("Error:", error);
+        });
+    }, []);
 
     return (
         <div className={styles.page}>
@@ -46,14 +38,14 @@ export default function Home() {
 
                 <h4>Phase Two</h4>
                 <p><code>input</code> to capture a search term</p>
-                <SearchBar value={value} setValue={setValue} onSearchClick={handleSearchClick} />
+                <SearchBar value={value} setValue={setValue} />
 
                 {/* Display the search results */}
-                <ul>
+                {/* <ul>
                     {searchResult.map((book) => (
                         <li key={book.id}>{book.title}</li>
                     ))}
-                </ul>
+                </ul> */}
             </main>
         </div>
     );

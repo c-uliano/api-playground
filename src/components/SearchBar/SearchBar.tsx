@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 export const SearchBar = (props: any) => {
-    const {value, setValue} = props;
+    const {value, setValue, onSearchHandler} = props;
 
     const onChangeHandler = (e: any) => {
         setValue(e.target.value);
@@ -11,6 +11,7 @@ export const SearchBar = (props: any) => {
         <>
             <form action="">
                 <input onChange={onChangeHandler} type="text" value={value} />
+                <button onClick={onSearchHandler}>Search</button>
             </form>
             <p>{value}</p>
         </>

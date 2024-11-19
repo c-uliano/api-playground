@@ -15,19 +15,31 @@ export default function Home() {
 
     //// this should probably be in a useEffect, it kept running in the console non-stop
     // * https://gutendex.com/ for documentation
+
+    // test 1: as-is it keeps running and running, sometimes displaying the correct data, sometimes not.
     useEffect(() => {
-        fetch(`https://gutendex.com/books?search=${value}`)
-        .then((response) => {
-            return response.json();
-        })
-        .then((data) => {
-            setSearchResult(data.results);
-            console.log(data.results);
-        })
-        .catch((error) => {
-            console.log("Error:", error);
-        });
-    }, []);
+        // if there's nothing saved in value, don't fetch. This stopped the random data that would be pulled and displayed
+        if (value) {
+            fetch(`https://gutendex.com/books?search=${value}`)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    setSearchResult(data.results);
+                    console.log(data.results);
+                })
+                .catch((error) => {
+                    console.log("Error:", error);
+                });
+        }
+    }, [value]); // this needs to run every time the search value changes
+
+    const onSearch = () => {
+        // when the button is clicked the searched term needs to be updated in the api query
+        // on click, update value with new value
+        // const newValue = value;
+        // setValue(newValue); // this doesn't work, I'm getting some weirdness, probably because setValue is being used in the SearchBar as well?
+    }
 
     return (
         <div className={styles.page}>
@@ -38,14 +50,14 @@ export default function Home() {
 
                 <h4>Phase Two</h4>
                 <p><code>input</code> to capture a search term</p>
-                <SearchBar value={value} setValue={setValue} />
+                <SearchBar value={value} setValue={setValue} onSearchHandler={onSearch} />
 
                 {/* Display the search results */}
-                {/* <ul>
+                <ul>
                     {searchResult.map((book) => (
                         <li key={book.id}>{book.title}</li>
                     ))}
-                </ul> */}
+                </ul>
             </main>
         </div>
     );

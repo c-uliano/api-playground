@@ -7,9 +7,13 @@ export const SearchBar = (props: any) => {
         setValue(e.target.value);
     }
 
+    const onSubmitHandler = (e: any) => {
+        e.preventDefault();
+    }
+
     return (
         <>
-            <form action="">
+            <form action="" onSubmit={onSubmitHandler}>
                 <input onChange={onChangeHandler} type="text" value={value} />
                 <button onClick={onSearchHandler}>Search</button>
             </form>

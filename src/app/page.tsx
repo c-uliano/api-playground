@@ -56,7 +56,7 @@ export default function Home() {
                 <p><code>input</code> to capture a search term</p>
                 <SearchBar btnText="Search Now" value={value} setValue={setValue} onSearchHandler={onSearch} />
 
-                {/* Display the search results */}
+                {/* Display the search results TODO update to display author name */}
                 <ul>
                     {searchResult.map((book) => (
                         <li key={book.id}>{book.title}</li>

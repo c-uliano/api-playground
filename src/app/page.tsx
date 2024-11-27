@@ -54,7 +54,7 @@ export default function Home() {
 
                 <h4>Phase Two</h4>
                 <p><code>input</code> to capture a search term</p>
-                <SearchBar value={value} setValue={setValue} onSearchHandler={onSearch} />
+                <SearchBar btnText="Search Now" value={value} setValue={setValue} onSearchHandler={onSearch} />
 
                 {/* Display the search results */}
                 <ul>

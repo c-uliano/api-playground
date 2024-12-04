@@ -7,6 +7,9 @@ import { SearchBar } from "@/components/SearchBar/SearchBar";
 type ItemType = {
     title: string;
     id: number;
+    authors: string[];
+    copyright: boolean;
+    download_count: number;
     // other properties
 };
 export default function Home() {
@@ -17,6 +20,8 @@ export default function Home() {
     //// this should probably be in a useEffect, it kept running in the console non-stop
     // * https://gutendex.com/ for documentation
 
+    const written_by: string[] = [];
+
     useEffect(() => {
         // if there's nothing saved in value, don't fetch. This stopped the random data that would be pulled and displayed
         if (query) {
@@ -26,7 +31,14 @@ export default function Home() {
                 })
                 .then((data) => {
                     setSearchResult(data.results);
-                    console.log(data.results);
+                    console.log('LOOK AT THESE RESULTS', searchResult);
+                    data.results.map((each: any) => {
+                        written_by.push(each.authors)
+                    });
+                    // TODO: I can't figure out how to get the author's name
+                    // ! this isn't what's showing in the console...
+                    console.log('ONLY LOOK HERE', written_by);
+                    // console.log(written_by.map(author => author));
                 })
                 .catch((error) => {
                     console.log("Error:", error);
@@ -54,12 +66,17 @@ export default function Home() {
 
                 <h4>Phase Two</h4>
                 <p><code>input</code> to capture a search term</p>
-                <SearchBar value={value} setValue={setValue} onSearchHandler={onSearch} />
+                <SearchBar btnText="Search Now" value={value} setValue={setValue} onSearchHandler={onSearch} />
 
-                {/* Display the search results */}
+                {/* Display the search results TODO update to display author name */}
                 <ul>
                     {searchResult.map((book) => (
-                        <li key={book.id}>{book.title}</li>
+                        <li key={book.id}>{book.download_count}</li>
+                    ))}
+                </ul>
+                <ul>
+                    {written_by.map(author => (
+                        <li>{author}</li>
                     ))}
                 </ul>
             </main>

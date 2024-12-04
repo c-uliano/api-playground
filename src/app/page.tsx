@@ -31,6 +31,7 @@ export default function Home() {
                 })
                 .then((data) => {
                     setSearchResult(data.results);
+                    console.log('LOOK AT THESE RESULTS', searchResult);
                     data.results.map((each: any) => {
                         written_by.push(each.authors)
                     });

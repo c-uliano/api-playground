@@ -35,8 +35,9 @@ export default function Home() {
                         written_by.push(each.authors)
                     });
                     // TODO: I can't figure out how to get the author's name
-                    console.log(written_by);
-                    console.log(written_by.map(author => author));
+                    // ! this isn't what's showing in the console...
+                    console.log('ONLY LOOK HERE', written_by);
+                    // console.log(written_by.map(author => author));
                 })
                 .catch((error) => {
                     console.log("Error:", error);
